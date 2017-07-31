@@ -59,6 +59,7 @@ addons:
 #    - sudo rm -fr libmypaint
 
 script:
+    - bash -ex appimage.sh || true
 #    - which python
 #    - python -m this
 #    - python --version
@@ -68,4 +69,3 @@ script:
 #    - sudo python setup.py managed_install
 #    - sudo python setup.py managed_uninstall
 #    - sudo python setup.py install --root=/app/ --prefix=.
-    - bash -ex appimage/appimage.sh || true
