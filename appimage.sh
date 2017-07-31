@@ -91,7 +91,7 @@ copy_deps
 # Delete dangerous libraries; see
 # https://github.com/probonopd/AppImages/blob/master/excludelist
 delete_blacklisted
-find . -name *harfbuzz* -depth -delete
+find . -name *harfbuzz* -delete || true
 
 ########################################################################
 # desktopintegration asks the user on first run to install a menu item
