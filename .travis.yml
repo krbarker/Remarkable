@@ -7,11 +7,11 @@ sudo: required
 
 #dist: trusty
 
+# dependencies taken from
+# https://github.com/jamiemcg/Remarkable/blob/master/debian/control
 addons:
 	apt:
-		packages:
-			# dependencies taken from
-			# https://github.com/jamiemcg/Remarkable/blob/master/debian/control
+		packages:			
 			- python3
 
 #
