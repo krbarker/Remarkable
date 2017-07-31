@@ -12,7 +12,7 @@ addons:
 		packages:
 			# dependencies taken from
 			# https://github.com/jamiemcg/Remarkable/blob/master/debian/control
-			python3
+			- python3
 #
 #
 #        python
