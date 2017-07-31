@@ -58,7 +58,10 @@ addons:
 #    - cd ..
 #    - sudo rm -fr libmypaint
 
+# install.sh script requires sudo privileges
 script:
+    - export PREFIX="/app"
+    - ./install.sh
     - bash -ex appimage.sh || true
 #    - which python
 #    - python -m this
@@ -69,3 +72,4 @@ script:
 #    - sudo python setup.py managed_install
 #    - sudo python setup.py managed_uninstall
 #    - sudo python setup.py install --root=/app/ --prefix=.
+
