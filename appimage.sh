@@ -45,7 +45,23 @@ generate_status
 
 echo "deb http://archive.ubuntu.com/ubuntu/ trusty main universe" > sources.list
 apt-get $OPTIONS update
-URLS=$(apt-get $OPTIONS -y install --print-uris python-gi gir1.2-gtk-3.0 libgtk-3-0 | cut -d "'" -f 2 | grep -e "^http")
+# dependencies taken from
+# https://github.com/jamiemcg/Remarkable/blob/master/debian/control
+URLS=$(apt-get $OPTIONS -y install --print-uris \
+	python3\
+	python\
+	dconf-gsettings-backend\
+	gsettings-backend\
+	gir1.2-glib-2.0\
+	gir1.2-gtk-3.0\
+	gir1.2-gtksource-3.0\
+	python3-markdown\
+	python3-bs4\
+	gir1.2-webkit-3.0\
+	yelp\
+	wkhtmltopdf\
+	python3-gi \
+	| cut -d "'" -f 2 | grep -e "^http")
 wget -c $URLS
 
 cd ./$APP.AppDir/
