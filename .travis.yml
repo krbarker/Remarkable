@@ -10,9 +10,9 @@ sudo: required
 # dependencies taken from
 # https://github.com/jamiemcg/Remarkable/blob/master/debian/control
 addons:
-	apt:
-		packages:
-			- python3
+  apt:
+    packages:
+      - python3
 
 #
 #
