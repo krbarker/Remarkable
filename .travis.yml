@@ -11,7 +11,7 @@ sudo: required
 # https://github.com/jamiemcg/Remarkable/blob/master/debian/control
 addons:
 	apt:
-		packages:			
+		packages:
 			- python3
 
 #
