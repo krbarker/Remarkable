@@ -11,6 +11,7 @@ export ARCH=$(arch)
 
 APP=Remarkable
 LOWERAPP=${APP,,}
+REMARKABLE_VERSION="2.87"
 
 mkdir -p $HOME/$APP/$APP.AppDir/usr/
 
@@ -90,7 +91,7 @@ copy_deps
 # Delete dangerous libraries; see
 # https://github.com/probonopd/AppImages/blob/master/excludelist
 delete_blacklisted
-find . -name *harfbuzz* -delete -depth || True
+find . -name *harfbuzz* -depth -delete
 
 ########################################################################
 # desktopintegration asks the user on first run to install a menu item
@@ -102,7 +103,7 @@ get_desktopintegration $LOWERAPP
 # Determine the version of the app; also include needed glibc version
 ########################################################################
 
-VERSION=$(echo "$MYPAINT_VERSION_CEREMONIAL" | sed -e 's/alpha+gitexport/git/')
+VERSION=$(echo "${REMARKABLE_VERSION}")
 
 ########################################################################
 # Patch away absolute paths; it would be nice if they were relative
