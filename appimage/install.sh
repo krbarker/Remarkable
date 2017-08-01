@@ -6,8 +6,14 @@ function setString() {
 	fi
 }
 
+# change to remarkable-top directory, no matter
+# from which dir this script is called from.
+cd "$( dirname "${BASH_SOURCE[0]}" )/../"
+#MYDIR=$(pwd)
+#echo "MYDIR='${MYDIR}'"
+
 # install prefix directory
-setString "PREFIX" "/usr"
+setString "PREFIX" "/app"
 sudo mkdir -p "${PREFIX}"
 
 # install binary
@@ -23,7 +29,7 @@ sudo mkdir -p "${LIB_DIR}"
 setString "PYTHON_DIR" "${LIB_DIR}/python3/dist-packages"
 sudo mkdir -p "${PYTHON_DIR}"
 sudo cp -R {markdown,pdfkit,remarkable,remarkable_lib} "${PYTHON_DIR}"/
-sudo cp debian/*.egg-info "${PYTHON_DIR}"/
+sudo cp appimage/*.egg-info "${PYTHON_DIR}"/
 
 # install mime type
 setString "MIME_DIR" "${LIB_DIR}/mime/packages"
@@ -41,6 +47,8 @@ sudo cp remarkable.desktop "${DESKTOP_DIR}"/
 # install documentation
 setString "DOC_DIR" "${SHARE_DIR}/doc/remarkable"
 sudo mkdir -p "${DOC_DIR}"
+#TODO: install documentation
+#(license file, changelog, README file, etc.)
 
 # install glib
 setString "GLIB_DIR" "${SHARE_DIR}/glib-2.0/schemas"
@@ -50,6 +58,7 @@ sudo cp data/glib-2.0/schemas/* "${GLIB_DIR}"/
 # install help
 setString "HELP_DIR" "${SHARE_DIR}/help"
 sudo mkdir -p "${HELP_DIR}"
+#TODO: install help files
 
 # install icon(s)
 setString "ICON_DIR" "${SHARE_DIR}/icons/"

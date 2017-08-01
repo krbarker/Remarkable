@@ -13,11 +13,15 @@ APP=Remarkable
 LOWERAPP=${APP,,}
 REMARKABLE_VERSION="2.87"
 
+rm -rf $HOME/$APP
 mkdir -p $HOME/$APP/$APP.AppDir/usr/
 
 cd $HOME/$APP/
 
 wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
+# apply patches to functions.sh
+sed -i 's|./usr/bin/$REALBIN.wrapper|.$REALBIN.wrapper|g' ./functions.sh
+
 . ./functions.sh
 
 cd $APP.AppDir

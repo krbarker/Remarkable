@@ -5,6 +5,6 @@ sudo: required
 # install.sh script requires sudo privileges
 script:
     - export PREFIX="/app"
-    - ./install.sh
-    - bash -ex appimage.sh
+    - ./appimage/install.sh
+    - bash -ex appimage/appimage.sh
 
