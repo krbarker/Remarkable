@@ -14,6 +14,7 @@ LOWERAPP=${APP,,}
 REMARKABLE_VERSION="2.87"
 
 rm -rf $HOME/$APP
+rm -rf $HOME/out
 mkdir -p $HOME/$APP/$APP.AppDir/usr/
 
 cd $HOME/$APP/
@@ -21,6 +22,7 @@ cd $HOME/$APP/
 wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
 # apply patches to functions.sh
 sed -i 's|./usr/bin/$REALBIN.wrapper|.$REALBIN.wrapper|g' ./functions.sh
+sed -i 's|Exec=$REALBIN.wrapper|Exec=.$REALBIN.wrapper|g' ./functions.sh
 
 . ./functions.sh
 
@@ -115,7 +117,7 @@ VERSION=$(echo "${REMARKABLE_VERSION}")
 
 find usr/ -type f -exec sed -i -e 's|/usr|././|g' {} \;
 find usr/ -type f -exec sed -i -e 's@././/bin/env@/usr/bin/env@g' {} \;
-
+find usr/ -type f -exec sed -i -e 's@././/bin/python3@./python3@g' {} \;
 ########################################################################
 # AppDir complete
 # Now packaging it as an AppImage
