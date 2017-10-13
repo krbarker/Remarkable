@@ -23,13 +23,39 @@
 
 import pytest
 
-#import styles 
-#import markdown
+import remarkable.styles 
+import markdown
 
-# 
-# this file contains some pytest unit tests
-# for instructions on how to us it, see https://docs.pytest.org/
-#
+#html_start = ""
+#html_end = ""
+exts = ['markdown.extensions.extra','markdown.extensions.toc', 'markdown.extensions.smarty', 'markdown.extensions.nl2br', 'markdown.extensions.urlize', 'markdown.extensions.Highlighting', 'markdown.extensions.Strikethrough', 'markdown.extensions.markdown_checklist', 'markdown.extensions.superscript', 'markdown.extensions.subscript', 'markdown.extensions.mathjax']
 
-def test_hello_world():
-    assert 1 == 1
+#def setup_html():
+#    global html_start
+#    global html_end
+#    html_start = 'body'
+
+def test_markdown_normal_text1():
+     text = "abc"
+     html = markdown.markdown(text)
+     assert html == '<p>abc</p>'
+
+def test_markdown_normal_text2():
+     text = "abc\n\ndef"
+     html = markdown.markdown(text)
+     assert html == '<p>abc</p>\n<p>def</p>'
+
+def test_markdown_head1():
+     text = "# title"
+     html = markdown.markdown(text)
+     assert html == '<h1>title</h1>'
+
+def test_markdown_head2():
+     text = "### title"
+     html = markdown.markdown(text)
+     assert html == '<h3>title</h3>'
+
+def test_markdown_head3():
+     text = "### title"
+     html = markdown.markdown(text)
+     assert html == '<h3>title</h3>'
