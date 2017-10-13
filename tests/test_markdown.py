@@ -60,9 +60,11 @@ def test_markdown_at2():
      assert html == expected
 
 def test_markdown_emoji1():
-     text = 'emojis: :sparkles: :camel: :boom:'
+     text = 'emojis: :+1: :sparkles: :camel: :boom:'
      html = markdown.markdown(text, exts)
      expected = '<p>emojis: '
+     expected += '<img alt=":+1:" '
+     expected += 'src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png" /> '
      expected += '<img alt=":sparkles:" '
      expected += 'src="https://assets-cdn.github.com/images/icons/emoji/unicode/2728.png" /> '
      expected += '<img alt=":camel:" '
@@ -290,6 +292,13 @@ def test_markdown_normal_text2():
      html = markdown.markdown(text, exts)
      expected = '<p>abc</p>\n<p>def</p>'
      assert html == expected
+
+def test_markdown_normal_text3():
+     text = 'abc\n\ndef\nhij\n\nklm'
+     html = markdown.markdown(text, exts)
+     expected = '<p>abc</p>\n<p>def<br />\nhij</p>\n<p>klm</p>'
+     assert html == expected
+
 
 def test_markdown_quote():
      text = 'abc:\n> def\nhij\n\nklm'
