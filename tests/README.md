@@ -10,6 +10,3 @@ pytest
 ```
 
 For detailed documentation, go to https://docs.pytest.org/
-
-# h1
-link to #h1
