@@ -46,16 +46,30 @@ exts = ['markdown.extensions.extra','markdown.extensions.toc', 'markdown.extensi
 #    global html_end
 #    html_start = 'body'
 
-def test_markdown_at1():
-     text = '\@def'
-     html = markdown.markdown(text, exts)
-     expected = '<p>@def</p>'
-     assert html == expected
+# only available in issues and pull-requests
+#def test_markdown_at1():
+#     text = '\@def'
+#     html = markdown.markdown(text, exts)
+#     expected = '<p>@def</p>'
+#     assert html == expected
 
 def test_markdown_at2():
      text = '`@`def'
      html = markdown.markdown(text, exts)
      expected = '<p><code>@</code>def</p>'
+     assert html == expected
+
+def test_markdown_emoji1():
+     text = 'emojis: :sparkles: :camel: :boom:'
+     html = markdown.markdown(text, exts)
+     expected = '<p>emojis: '
+     expected += '<img alt=":sparkles:" '
+     expected += 'src="https://assets-cdn.github.com/images/icons/emoji/unicode/2728.png" /> '
+     expected += '<img alt=":camel:" '
+     expected += 'src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f42b.png" /> '
+     expected += '<img alt=":boom:" '
+     expected += 'src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4a5.png" /> '
+     expected += '</p>'
      assert html == expected
 
 def test_markdown_bold_italic1():
@@ -133,6 +147,12 @@ def test_markdown_head1():
      expected = '<h1 id="some-text">some text</h1>'
      assert html == expected
 
+def test_markdown_head1_second():
+     text = '# this is a &lt;h1&gt; tag'
+     html = markdown.markdown(text, exts)
+     expected = '<h1 id="this-is-a-h1-tag">this is a &lt;h1&gt; tag</h1>'
+     assert html == expected
+
 def test_markdown_head2():
      text = '### some text'
      html = markdown.markdown(text, exts)
@@ -151,14 +171,67 @@ def test_markdown_head6():
      expected = '<h6 id="some-text">some text</h6>'
      assert html == expected
 
-def test_markdown_html1():
-     text = '# this is a <h1> tag'
+def test_markdown_image_absolute():
+     text = '![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)'
      html = markdown.markdown(text, exts)
-     expected = '<h1 id="this-is-a-tag">this is a &lt;h1&gt; tag</h1>'
+     expected = '<p><img alt="Image of Yaktocat" '
+     expected += 'src="https://octodex.github.com/images/yaktocat.png" /></p>'
      assert html == expected
 
+def test_markdown_image_relative1():
+     text = '![Image of Yaktocat](images/yaktocat.png)'
+     html = markdown.markdown(text, exts)
+     expected = '<p><img alt="Image of Yaktocat" '
+     expected += 'src="images/yaktocat.png" /></p>'
+     assert html == expected
 
-# TODO: add tests for hypertext links
+def test_markdown_image_relative2():
+     text = '![Image of Yaktocat](./images/yaktocat.png)'
+     html = markdown.markdown(text, exts)
+     expected = '<p><img alt="Image of Yaktocat" '
+     expected += 'src="./images/yaktocat.png" /></p>'
+     assert html == expected
+
+def test_markdown_image_relative3():
+     text = '![Image of Yaktocat](../images/yaktocat.png)'
+     html = markdown.markdown(text, exts)
+     expected = '<p><img alt="Image of Yaktocat" '
+     expected += 'src="../images/yaktocat.png" /></p>'
+     assert html == expected
+
+# TODO: add more tests for hypertext links
+
+def test_markdown_link_absolute1():
+     text = 'using [GitHub Pages](https://pages.github.com/).'
+     html = markdown.markdown(text, exts)
+     expected = '<p>using <a href="https://pages.github.com/">GitHub Pages</a>.</p>'
+     assert html == expected
+
+def test_markdown_link_relative1():
+     text = 'read [license](docs/LICENSE.md).'
+     html = markdown.markdown(text, exts)
+     expected = '<p>read <a href="docs/LICENSE.md">license</a>.</p>'
+     assert html == expected
+
+def test_markdown_link_relative2():
+     text = 'read [license](./docs/LICENSE.md).'
+     html = markdown.markdown(text, exts)
+     expected = '<p>read <a href="./docs/LICENSE.md">license</a>.</p>'
+     assert html == expected
+
+def test_markdown_link_relative3():
+     text = 'read [license](../docs/LICENSE.md).'
+     html = markdown.markdown(text, exts)
+     expected = '<p>read <a href="../docs/LICENSE.md">license</a>.</p>'
+     assert html == expected
+
+# TODO: add more tests for hypertext links
+
+def test_markdown_list_bullet():
+     text = '* One\n* Two\n* Three'
+     html = markdown.markdown(text, exts)
+     expected = '<ul>\n<li>One</li>\n<li>Two</li>\n<li>Three</li>\n</ul>'
+     assert html == expected
 
 def test_markdown_list_bullet():
      text = '* One\n* Two\n* Three'
@@ -186,30 +259,6 @@ def test_markdown_list_dash_nested():
      expected = '<ul>\n<li>One</li>\n<li>Two\n'
      expected += '<ul>\n<li>2.5</li>\n</ul>\n'
      expected += '</li>\n</ul>'
-     assert html == expected
-
-def test_markdown_link_absolute1():
-     text = 'using [GitHub Pages](https://pages.github.com/).'
-     html = markdown.markdown(text, exts)
-     expected = '<p>using <a href="https://pages.github.com/">GitHub Pages</a>.</p>'
-     assert html == expected
-
-def test_markdown_link_relative1():
-     text = 'read [license](docs/LICENSE.md).'
-     html = markdown.markdown(text, exts)
-     expected = '<p>read <a href="docs/LICENSE.md">license</a>.</p>'
-     assert html == expected
-
-def test_markdown_link_relative2():
-     text = 'read [license](./docs/LICENSE.md).'
-     html = markdown.markdown(text, exts)
-     expected = '<p>read <a href="./docs/LICENSE.md">license</a>.</p>'
-     assert html == expected
-
-def test_markdown_link_relative3():
-     text = 'read [license](../docs/LICENSE.md).'
-     html = markdown.markdown(text, exts)
-     expected = '<p>read <a href="../docs/LICENSE.md">license</a>.</p>'
      assert html == expected
 
 def test_markdown_list_numbered():
@@ -250,6 +299,13 @@ def test_markdown_quote():
      expected += '<p>klm</p>'
      assert html == expected
 
+# only available in issues and pull-requests
+#def test_markdown_normal_reference():
+#     text = 'Hello @someuser'
+#     html = markdown.markdown(text, exts)
+#     expected = '<p>Hello <a href="someuser">someuser</a></p>'
+#     assert html == expected
+
 def test_markdown_star1():
      text = 'abc \* def'
      html = markdown.markdown(text, exts)
@@ -266,4 +322,13 @@ def test_markdown_strike_through():
      text = 'abc ~~text~~ def'
      html = markdown.markdown(text, exts)
      expected = '<p>abc <del>text</del> def</p>'
+     assert html == expected
+
+def test_markdown_task_list():
+     text = '- [X] Completed\n- [ ] Incomplete\n'
+     html = markdown.markdown(text, exts)
+     expected = '<ul class="checklist">\n'
+     expected += '<li><input type="checkbox" disabled checked> Completed</li>\n'
+     expected += '<li><input type="checkbox" disabled> Incomplete</li>\n'
+     expected += '</ul>'
      assert html == expected
