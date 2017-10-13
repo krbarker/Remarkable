@@ -10,3 +10,5 @@ pytest
 ```
 
 For detailed documentation, go to https://docs.pytest.org/
+
+mojombo/github-flavored-markdown#1

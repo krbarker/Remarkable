@@ -332,3 +332,29 @@ def test_markdown_task_list():
      expected += '<li><input type="checkbox" disabled> Incomplete</li>\n'
      expected += '</ul>'
      assert html == expected
+
+def test_markdown_table():
+     text  = 'name | description\n'
+     text += '---- | -----------\n'
+     text += 'a | abc\n'
+     text += 'some super stupid name | some description\n'
+     html = markdown.markdown(text, exts)
+     expected = '<table>\n'
+     expected += '<thead>\n'
+     expected += '<tr>\n'
+     expected += '<th>name</th>\n'
+     expected += '<th>description</th>\n'
+     expected += '</tr>\n'
+     expected += '</thead>\n'
+     expected += '<tbody>\n'
+     expected += '<tr>\n'
+     expected += '<td>a</td>\n'
+     expected += '<td>abc</td>\n'
+     expected += '</tr>\n'
+     expected += '<tr>\n'
+     expected += '<td>some super stupid name</td>\n'
+     expected += '<td>some description</td>\n'
+     expected += '</tr>\n'
+     expected += '</tbody>\n'
+     expected += '</table>'
+     assert html == expected
